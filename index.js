@@ -19,6 +19,8 @@
  *   treasury_count        → number_integer
  *   treasury_last_updated → date_time (UTC ISO 8601)
  */
+// EcomModa — Treasury-COD (v2.3.0)
+// skills: migration-playbook v2.5.0 · worker-builder v2.1.0 · constants v1.8.0 — 06-09-2026
 
 // ══════════════════════════════════════════════════════════════
 // §CONSTANTS
