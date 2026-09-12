@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- skills: html-builder v6.6.0 · constants v1.8.0 — 06-09-2026 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Treasury COD — تسجيل الخزنة</title>
@@ -87,7 +88,6 @@ body{font-family:'Noto Sans Arabic',sans-serif;background:var(--bg);color:var(--
 .data-table tr.row-ok td{background:transparent;}
 .data-table tr.row-warn td{background:#fffbeb;}
 .data-table tr.row-err td{background:var(--red-light);}
-/* [NEW v2.2.0] compensating entry row */
 .data-table tr.row-comp td{background:#fef3c7;opacity:.85;}
 .mono{font-family:var(--font-mono);font-size:12px;font-weight:600;}
 .amount-pos{color:var(--green);font-weight:700;font-family:var(--font-mono);}
@@ -111,15 +111,34 @@ body{font-family:'Noto Sans Arabic',sans-serif;background:var(--bg);color:var(--
 .hint code{font-family:var(--font-mono);background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:11px;direction:ltr;display:inline-block;}
 .empty-state{text-align:center;padding:36px 16px;color:var(--text-muted);}
 .empty-state-icon{font-size:32px;margin-bottom:8px;}
-.log-search-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+
+/* ══ Log Tab Filters — Inventory Audit Style ══ */
+.log-filters-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;}
+.log-filters-header{padding:10px 15px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;border-bottom:1px solid var(--border);}
+.log-filters-header:hover{background:var(--surface-2);}
+.log-filters-title{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:7px;}
+.log-filters-body{padding:13px 15px;}
+.log-filter-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:9px;}
+.log-filter-row:last-child{margin-bottom:0;}
+.log-filter-lbl{font-size:11px;color:var(--text-secondary);font-weight:600;white-space:nowrap;min-width:40px;}
 .log-input{flex:1;min-width:120px;padding:7px 11px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:13px;outline:none;direction:ltr;transition:border-color .2s;}
 .log-input:focus{border-color:var(--accent);}
 .log-select{padding:7px 11px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:inherit;font-size:12px;outline:none;background:var(--surface);cursor:pointer;transition:border-color .2s;}
 .log-select:focus{border-color:var(--accent);}
-/* [NEW v2.2.0] date input */
-.log-date{width:128px;flex:none;padding:7px 9px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:12px;outline:none;direction:ltr;transition:border-color .2s;}
+.log-date{width:140px;flex:none;padding:7px 9px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:12px;outline:none;direction:ltr;transition:border-color .2s;}
 .log-date:focus{border-color:var(--accent);}
-/* [NEW v2.2.0] reconciliation panel */
+
+/* Quick date buttons — same for log and analytics */
+.quick-btns{display:flex;gap:4px;flex-wrap:wrap;}
+.qbtn{padding:5px 10px;border-radius:var(--radius-sm);border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text-secondary);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.qbtn:hover,.qbtn.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+.clear-filters-btn{padding:5px 12px;border-radius:var(--radius-sm);border:1px solid var(--red-border);background:var(--red-light);color:var(--red);font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.clear-filters-btn:hover{background:var(--red);color:#fff;}
+.log-results-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 15px;background:var(--surface-2);border-top:1px solid var(--border);}
+.log-results-count{font-size:12px;color:var(--text-secondary);}
+.log-results-count strong{color:var(--text-primary);font-family:var(--font-mono);}
+
+/* recon panel */
 .recon-panel{border-radius:var(--radius-sm);padding:10px 13px;margin-bottom:13px;display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;}
 .recon-panel.ok{background:var(--green-light);border:1px solid var(--green-border);color:var(--green);}
 .recon-panel.err{background:var(--red-light);border:1px solid var(--red-border);color:var(--red);}
@@ -174,6 +193,7 @@ details>summary:hover{color:var(--accent);}
 .cl-tag.new{background:var(--green-light);color:var(--green);}
 .cl-tag.fix{background:var(--red-light);color:var(--red);}
 .cl-tag.change{background:var(--amber-light);color:var(--amber);}
+
 /* ══ Analytics Tab CSS ══ */
 .ana-date-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .ana-date-label{font-size:11px;font-weight:600;color:var(--text-secondary);white-space:nowrap;}
@@ -185,8 +205,21 @@ details>summary:hover{color:var(--accent);}
 .ana-load-btn{padding:7px 16px;background:var(--green);border:none;border-radius:var(--radius-sm);color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:6px;margin-right:auto;}
 .ana-load-btn:hover{background:#15803d;}
 .ana-load-btn:disabled{opacity:.5;cursor:not-allowed;}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
-.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 15px;position:relative;box-shadow:var(--shadow);}
+
+/* ══ Collapsible analytics sections — unified ══ */
+.ana-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;}
+.ana-section-header{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.ana-section-header:hover{background:var(--surface-2);}
+.ana-section-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px;color:var(--text-primary);}
+.ana-section-arrow{font-size:11px;color:var(--text-muted);transition:transform .2s;flex-shrink:0;}
+.ana-section-arrow.open{transform:rotate(180deg);}
+.ana-section-body{border-top:1px solid var(--border);}
+.ana-section-body.collapsed{display:none;}
+.ana-section-padded{padding:14px;}
+
+/* KPI grid inside collapsible */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 15px;position:relative;}
 .kpi-border-green{border-top:3px solid var(--green);}
 .kpi-border-blue{border-top:3px solid var(--accent);}
 .kpi-border-purple{border-top:3px solid var(--purple);}
@@ -199,14 +232,7 @@ details>summary:hover{color:var(--accent);}
 .kpi-val.amber{color:var(--amber);}
 .kpi-sub{font-size:10.5px;color:var(--text-muted);margin-top:4px;}
 .kpi-icon{position:absolute;top:12px;left:12px;font-size:24px;opacity:.12;}
-.ana-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;box-shadow:var(--shadow);}
-.ana-section-header{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
-.ana-section-header:hover{background:var(--surface-2);}
-.ana-section-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px;color:var(--text-primary);}
-.ana-section-arrow{font-size:11px;color:var(--text-muted);transition:transform .2s;}
-.ana-section-arrow.open{transform:rotate(180deg);}
-.ana-section-body{padding:0 14px 14px;border-top:1px solid var(--border);}
-.ana-filter-row{display:flex;gap:7px;align-items:center;margin-bottom:10px;flex-wrap:wrap;padding-top:10px;}
+.ana-filter-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
 .ana-filter-lbl{font-size:11px;color:var(--text-secondary);font-weight:600;}
 .ana-filter-sel{padding:5px 9px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);font-family:inherit;font-size:11px;outline:none;background:var(--surface);cursor:pointer;}
 .days-ok{background:#f0fdf4;color:#15803d;border:1px solid #86efac;padding:2px 7px;border-radius:4px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
@@ -215,11 +241,10 @@ details>summary:hover{color:var(--accent);}
 .type-basic{background:var(--accent-light);color:var(--accent);border:1px solid #bfdbfe;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;}
 .type-exchange{background:var(--purple-light);color:var(--purple);border:1px solid var(--purple-border);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;}
 .type-return{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber-border);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:15px;margin-bottom:14px;box-shadow:var(--shadow);}
-.chart-card-title{font-size:11.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.chart-wrap{position:relative;height:200px;}
-.chart-wrap.tall{height:250px;}
+.chart-wrap{position:relative;height:220px;}
+.chart-wrap.tall{height:260px;}
+.chart-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.chart-section-title{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
 .ana-info-box{border-radius:var(--radius-sm);padding:9px 12px;font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
 .ana-info-warn{background:var(--red-light);border:1px solid var(--red-border);color:var(--red);}
 .ana-info-amber{background:var(--amber-light);border:1px solid var(--amber-border);color:var(--amber);}
@@ -230,7 +255,10 @@ details>summary:hover{color:var(--accent);}
 .sk-row{height:42px;margin-bottom:6px;}
 .ana-legend{display:flex;gap:12px;font-size:11px;color:var(--text-muted);margin-bottom:10px;}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:4px;}
-@media(max-width:700px){.kpi-grid{grid-template-columns:1fr 1fr;}.chart-grid{grid-template-columns:1fr;}}
+.ana-section-subtitle{font-size:11px;color:var(--text-muted);font-weight:400;margin-right:4px;}
+@media(max-width:700px){.kpi-grid{grid-template-columns:1fr 1fr;}.chart-grid-2{grid-template-columns:1fr;}}
+
+/* Login */
 .login-overlay{position:fixed;inset:0;background:var(--bg);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;}
 .login-overlay.hidden{display:none;}
 .login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 22px;width:100%;max-width:360px;box-shadow:0 8px 32px rgba(0,0,0,.1);}
@@ -258,6 +286,7 @@ details>summary:hover{color:var(--accent);}
 </style>
 
 <!-- §SHELL -->
+<div id="toastContainer" class="toast-container"></div>
 
 <!-- Settings Modal -->
 <div class="modal-overlay hidden" id="settingsModal">
@@ -272,7 +301,7 @@ details>summary:hover{color:var(--accent);}
   </div>
 </div>
 
-<!-- About Modal — [MOD v2.2.0] -->
+<!-- About Modal -->
 <div class="modal-overlay hidden" id="aboutModal" onclick="if(event.target===this)closeAbout()">
   <div class="modal-box" style="max-width:640px;max-height:90vh;overflow-y:auto;">
     <div class="modal-header">ℹ️ عن الأداة — Treasury COD<button class="modal-close" onclick="closeAbout()">✕</button></div>
@@ -289,15 +318,15 @@ details>summary:hover{color:var(--accent);}
             <div class="about-step"><span class="about-num">2</span><span>اضغط "معاينة" — يتحقق من Shopify ويعرض السعر الأصلي والرصيد الحالي والتنبيهات</span></div>
             <div class="about-step"><span class="about-num">3</span><span>راجع نتائج المعاينة — لو فيه Override يظهر modal تأكيد مع تفاصيل الفروقات</span></div>
             <div class="about-step"><span class="about-num">4</span><span>اضغط تأكيد — يُسجَّل في D1 أولاً ثم Shopify | فشل Shopify = compensating record تلقائي</span></div>
-            <div class="about-step"><span class="about-num">5</span><span>راجع النتائج أو ابحث في "سجل الأوردر" (مع Reconciliation D1↔Shopify) أو تصفح "سجل العمليات"</span></div>
-            <div class="about-step"><span class="about-num">6</span><span>تاب التحليلات: اختر فترة زمنية واضغط تحميل — يعرض KPIs + pending orders + anomalies + charts</span></div>
+            <div class="about-step"><span class="about-num">5</span><span>راجع النتائج أو ابحث في "سجل الأوردر" أو تصفح "سجل العمليات" مع فلاتر متقدمة + فترات سريعة</span></div>
+            <div class="about-step"><span class="about-num">6</span><span>تاب التحليلات: اختر فترة زمنية — كل قسم قابل للطي/التوسيع بما فيهم الـ charts</span></div>
           </div>
           <div class="about-label">الـ Endpoints الرئيسية</div>
           <div class="about-endpoints">
             <div class="about-ep"><code>bulkPreview</code><span>معاينة — يرجع totalPrice + needsOverride + reconciliationWarning</span></div>
             <div class="about-ep"><code>bulkRegister</code><span>تسجيل — D1 أولاً ثم Shopify | overrideWarning: true لتجاوز حد 10%</span></div>
             <div class="about-ep"><code>getLog</code><span>سجل أوردر معين من D1 + Shopify confirmation + reconciliation</span></div>
-            <div class="about-ep"><code>get_logs</code><span>سجل العمليات بفلتر وصفحات (500/صفحة) مع date range</span></div>
+            <div class="about-ep"><code>get_logs</code><span>سجل العمليات بفلتر متقدم: موظف + بحث + date range + pagination</span></div>
             <div class="about-ep"><code>get_logs_export</code><span>تصدير كامل حتى 2000 صف للـ XLSX</span></div>
             <div class="about-ep"><code>get_analytics</code><span>تحليلات كاملة: 7 D1 SQL queries + Shopify enrichment (pending + courier + type)</span></div>
           </div>
@@ -312,21 +341,15 @@ details>summary:hover{color:var(--accent);}
             <tbody>
               <tr><td>Login / Logout</td><td>HTML</td><td>§AUTH-JS</td><td>verify_employee / log_logout</td></tr>
               <tr><td>Text / Excel Input</td><td>HTML</td><td>§TOOL-JS</td><td>parseTextInput / handleFileSelect</td></tr>
-              <tr><td>Duplicate Check</td><td>HTML+Worker</td><td>§TOOL-JS + §TREASURY</td><td>checkDuplicates() + Worker dedup</td></tr>
-              <tr><td>Preview</td><td>Worker</td><td>§TREASURY</td><td>bulkPreview → previewEntry()</td></tr>
-              <tr><td>Confirm Modal</td><td>HTML</td><td>§TOOL-JS</td><td>openConfirmModal / buildConfirmModalBody</td></tr>
+              <tr><td>Preview + Confirm Modal</td><td>Worker+HTML</td><td>§TREASURY + §TOOL-JS</td><td>bulkPreview → openConfirmModal</td></tr>
               <tr><td>Register + D1 + Shopify</td><td>Worker</td><td>§TREASURY</td><td>bulkRegister → registerEntry() [D1-first]</td></tr>
-              <tr><td>Override Threshold (10%)</td><td>Worker + HTML</td><td>§CONSTANTS + §TOOL-JS</td><td>WARNING_BLOCK_THRESHOLD + overrideWarning</td></tr>
-              <tr><td>Reconciliation Check</td><td>Worker + HTML</td><td>§TREASURY + §TOOL-JS</td><td>getD1SumForOrder() + renderReconciliationPanel()</td></tr>
-              <tr><td>Shopify metafields</td><td>Worker</td><td>§SHOPIFY</td><td>setTreasuryMetafields()</td></tr>
-              <tr><td>Order log lookup</td><td>Worker + HTML</td><td>§TREASURY + §TOOL-JS</td><td>getLog → D1-first + Shopify confirm</td></tr>
-              <tr><td>Date filter</td><td>HTML + Worker</td><td>§LOG-JS + §LOG-ENDPOINTS</td><td>logDateFrom/To → date_from/to params</td></tr>
-              <tr><td>Activity log</td><td>Worker</td><td>§LOG-ENDPOINTS</td><td>get_logs / get_logs_count</td></tr>
-              <tr><td>XLSX export</td><td>HTML</td><td>§LOG-JS</td><td>exportResults / exportOrderLog / exportLogGeneral</td></tr>
+              <tr><td>Override Threshold (10%)</td><td>Worker+HTML</td><td>§CONSTANTS + §TOOL-JS</td><td>WARNING_BLOCK_THRESHOLD + overrideWarning</td></tr>
+              <tr><td>Order log + Reconciliation</td><td>Worker+HTML</td><td>§TREASURY + §TOOL-JS</td><td>getLog → renderReconciliationPanel()</td></tr>
+              <tr><td>Log Filters (Advanced)</td><td>HTML</td><td>§LOG-JS</td><td>logQuickDate() + fetchLog() — موظف+نص+date range+quick dates</td></tr>
               <tr><td>Analytics Dashboard</td><td>Worker+HTML</td><td>§ANALYTICS + §ANALYTICS-JS</td><td>get_analytics → loadAnalytics()</td></tr>
+              <tr><td>Collapsible Analytics Sections</td><td>HTML</td><td>§ANALYTICS-JS</td><td>anaToggle() — كل الأقسام collapsible</td></tr>
               <tr><td>Pending Treasury</td><td>Worker+HTML</td><td>§ANALYTICS</td><td>treasury_count=0 from Shopify</td></tr>
               <tr><td>Order Type (S2+returnStatus)</td><td>Worker</td><td>§ANALYTICS</td><td>classifyOrderType()</td></tr>
-              <tr><td>Collection Date</td><td>Worker</td><td>§ANALYTICS</td><td>extractCODPaymentDate() — kind=SALE COD tx</td></tr>
               <tr><td>Anomaly Detection</td><td>Worker+HTML</td><td>§ANALYTICS</td><td>D1 SQL × 7 parallel queries</td></tr>
             </tbody>
           </table>
@@ -337,83 +360,59 @@ details>summary:hover{color:var(--accent);}
               <tr><td><code>LS_URL</code></td><td><code>treasury_worker_url</code></td></tr>
               <tr><td><code>LS_SECRET</code></td><td><code>treasury_worker_secret</code></td></tr>
               <tr><td><code>LS_ADMIN_URL</code></td><td><code>admin_worker_url</code> (shared)</td></tr>
-              <tr><td><code>TOOL_NAME</code></td><td><code>'treasury'</code> في الـ Worker</td></tr>
               <tr><td><code>WARNING_BLOCK_THRESHOLD</code></td><td><code>0.10</code> (10%) — في Worker §CONSTANTS</td></tr>
-              <tr><td><code>ALLOWED_FINANCIAL_STATUSES</code></td><td><code>['PAID','PARTIALLY_REFUNDED']</code></td></tr>
-              <tr><td><code>currentEmployee</code></td><td>JS memory only — لا يُحفظ في localStorage</td></tr>
               <tr><td><code>PENDING_START_DATE</code></td><td><code>'2026-05-01'</code> — حد أدنى لـ pending Shopify query</td></tr>
-              <tr><td><code>anaCache</code></td><td>in-memory cache للـ analytics (5min) — §ANALYTICS-JS</td></tr>
+              <tr><td><code>currentEmployee</code></td><td>JS memory only — لا يُحفظ في localStorage</td></tr>
+              <tr><td><code>anaCache</code></td><td>in-memory cache للـ analytics (بدون expiry)</td></tr>
+              <tr><td><code>logActiveFilters</code></td><td>object يحمل الفلاتر الحالية للـ log tab</td></tr>
             </tbody>
           </table>
-          <div class="about-label" style="margin-top:14px;">NOTES</div>
-          <p style="font-size:12px;line-height:1.8;color:var(--text-secondary);">
-            • <strong>Write order:</strong> D1 أولاً → Shopify | فشل D1 = error فوري | فشل Shopify = compensating record تلقائي في D1.<br>
-            • <strong>Source of truth:</strong> Shopify metafields — D1 هو audit trail مع reconciliation check (SUM vs Shopify).<br>
-            • <strong>Validation warning:</strong> فرق ≤10% = تنبيه فقط | فرق &gt;10% = يحتاج Override صريح من المستخدم.<br>
-            • <strong>financialStatus:</strong> Worker-side validation — فقط PAID + PARTIALLY_REFUNDED مقبولة.<br>
-            • <strong>Deduplication:</strong> HTML + Worker بيمنعوا الأوردرات المكررة في نفس الـ batch.<br>
-            • <strong>IP logging:</strong> كل deposit بتتسجل معه IP + UserAgent في D1 extra.<br>
-            • <strong>Negative delta:</strong> مسموح للاسترجاع.
-          </p>
         </div>
       </details>
     </div>
   </div>
 </div>
 
-<!-- Changelog Modal — [MOD v2.2.0] -->
+<!-- Changelog Modal -->
 <div class="modal-overlay hidden" id="changelogModal" onclick="if(event.target===this)closeChangelog()">
   <div class="modal-box" style="max-width:480px;max-height:80vh;overflow-y:auto;">
     <div class="modal-header">📋 سجل التحديثات<button class="modal-close" onclick="closeChangelog()">✕</button></div>
     <div class="modal-body">
       <div class="cl-entry">
+        <div class="cl-version">v2.4.0</div><div class="cl-date">2026-05-25</div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>فلاتر سجل العمليات المتقدمة — نفس نمط Inventory Audit</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>فترة سريعة في سجل العمليات: اليوم / أمس / آخر 7 / 30 / 90 / الشهر الحالي / السابق / العام</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>شريط نتائج الفلتر يُظهر عدد النتائج + الفلاتر النشطة</span></div>
+        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>كل أقسام التحليلات أصبحت Collapsible بما فيهم KPIs + Charts</span></div>
+        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>KPIs + الرسم البياني اليومي + Courier + Type — كلهم في sections قابلة للطي</span></div>
+      </div>
+      <div class="cl-entry">
         <div class="cl-version">v2.3.0</div><div class="cl-date">2026-05-22</div>
         <div class="cl-item"><span class="cl-tag new">جديد</span><span>تاب التحليلات (Analytics Dashboard) — 📊</span></div>
         <div class="cl-item"><span class="cl-tag new">جديد</span><span>get_analytics endpoint: 7 D1 SQL queries + Shopify enrichment</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>KPI cards: إجمالي مودَع + أوردرات + عمليات + في انتظار الخزينة</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>في انتظار الخزينة: treasury_count=0 مع منذ كم يوم (تاريخ التحصيل من COD tx)</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>تصنيف الأوردرات: من S2 (status_2_r_e) + Shopify returnStatus — لا bosta_order_type</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Anomaly Detection: تحذيرات | تكرار | override | فشل Shopify</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Charts: يومي (bar) + كوريير (grouped bar) + نوع (doughnut)</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>PENDING_START_DATE = 2026-05-01 ثابتة في Worker</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>في انتظار الخزينة: treasury_count=0 مع تاريخ التحصيل من COD tx</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>تصنيف الأوردرات من S2 + returnStatus | Anomaly Detection</span></div>
       </div>
       <div class="cl-entry">
         <div class="cl-version">v2.2.0</div><div class="cl-date">2026-05-21</div>
-        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>buildWarning: المقارنة الآن بـ (totalPrice - treasuryAmount) بدل outstanding (كان دايماً صفر)</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Confirmation modal قبل التسجيل مع ملخص كامل وتفاصيل Override</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Override blocking: فرق &gt;10% يُوقف التسجيل حتى يتم تأكيد صريح</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Date filter (من / إلى) في سجل العمليات</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Reconciliation panel في سجل الأوردر (D1 SUM ↔ Shopify)</span></div>
-        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>عمود "Shopify" في المعاينة أصبح "سعر الأوردر" (totalPrice)</span></div>
-        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>عمود "الموظف" مضاف في سجل الأوردر + مؤشر compensating entries</span></div>
+        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>buildWarning: المقارنة بـ (totalPrice - treasuryAmount) بدل outstanding</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Confirmation modal + Override blocking (فرق >10%)</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>Date filter + Reconciliation panel في سجل الأوردر</span></div>
       </div>
       <div class="cl-entry">
         <div class="cl-version">v2.1.0</div><div class="cl-date">2026-05-21</div>
-        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>حذف import_logs endpoint (ثغرة أمنية)</span></div>
-        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>financialStatus validation في Worker — فقط PAID + PARTIALLY_REFUNDED</span></div>
-        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>ترتيب الكتابة: D1 أولاً ثم Shopify + compensating record عند الفشل</span></div>
-        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>employee إلزامي في bulkRegister + deduplication في Worker</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>IP + UserAgent مسجّلان مع كل deposit</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>getLog: D1-first + Shopify confirmation بدل Shopify-first</span></div>
-        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>getLogs limit: 100 → 500</span></div>
+        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>D1 أولاً ثم Shopify + compensating record عند الفشل</span></div>
+        <div class="cl-item"><span class="cl-tag fix">إصلاح</span><span>financialStatus validation — فقط PAID + PARTIALLY_REFUNDED</span></div>
       </div>
       <div class="cl-entry">
         <div class="cl-version">v2.0.0</div><div class="cl-date">2026-05-21</div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>نقل للحساب الجديد (ecommoda-dev) مع D1 logging</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>شاشة تسجيل دخول بـ PIN كلوحة مفاتيح</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>تاب "سجل العمليات" — D1 activity log مع pagination وتصدير</span></div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>About modal بوصف الأداة وتشريح الكود</span></div>
-        <div class="cl-item"><span class="cl-tag change">تغيير</span><span>getLog يقرأ من D1 بدلاً من KV</span></div>
-      </div>
-      <div class="cl-entry">
-        <div class="cl-version">v1.0.0</div><div class="cl-date">2024</div>
-        <div class="cl-item"><span class="cl-tag new">جديد</span><span>إطلاق الأداة — KV logging على ecommoda24</span></div>
+        <div class="cl-item"><span class="cl-tag new">جديد</span><span>نقل للحساب الجديد (ecommoda-dev) مع D1 logging + Login بـ PIN</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- [NEW v2.2.0] Confirm Register Modal -->
+<!-- Confirm Register Modal -->
 <div class="modal-overlay hidden" id="confirmModal" onclick="if(event.target===this)closeConfirmModal()">
   <div class="modal-box" style="max-width:500px;">
     <div class="modal-header">✅ تأكيد التسجيل في الخزنة<button class="modal-close" onclick="closeConfirmModal()">✕</button></div>
@@ -431,7 +430,7 @@ details>summary:hover{color:var(--accent);}
   <div class="header-actions">
     <button class="hbtn" id="activeUserBtn" onclick="doLogout()" style="display:none;">👤 —</button>
     <button class="hbtn" onclick="openAbout()">ℹ️ عن الأداة</button>
-    <button class="hbtn" onclick="openChangelog()">v2.3.0 📋</button>
+    <button class="hbtn" onclick="openChangelog()">v2.4.0 📋</button>
     <button class="hbtn" id="settingsBtn" onclick="openSettings()">⚙️ الإعدادات</button>
   </div>
 </header>
@@ -543,7 +542,6 @@ details>summary:hover{color:var(--accent);}
       <div class="card-body" style="padding-bottom:0;"><div class="summary-grid" id="previewSummary"></div></div>
       <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;">
         <table class="data-table" id="previewTable">
-          <!-- [MOD v2.2.0] عمود "Shopify" أصبح "سعر الأوردر" (totalPrice) -->
           <thead><tr>
             <th>#</th><th>رقم الأوردر</th><th>الحالة المالية</th><th>سعر الأوردر</th>
             <th>الرصيد الحالي</th><th>عدد العمليات</th><th>المبلغ المُدخل</th><th>الرصيد الجديد</th><th>تنبيه</th>
@@ -555,7 +553,6 @@ details>summary:hover{color:var(--accent);}
         <div class="btn-row">
           <button class="btn btn-success" id="registerBtn" onclick="doRegisterFn()">✅ تسجيل في الخزنة</button>
           <button class="btn btn-outline" onclick="resetAll()">🔄 إعادة تعيين</button>
-          <!-- [NEW v2.2.0] مؤشر Override -->
           <span id="overrideIndicator" style="display:none;" class="badge badge-red"></span>
         </div>
       </div>
@@ -592,22 +589,20 @@ details>summary:hover{color:var(--accent);}
   <div class="card">
     <div class="card-header">سجل عمليات أوردر</div>
     <div class="card-body">
-      <div class="log-search-row">
+      <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;">
         <input class="log-input" id="logOrderInput" type="text" placeholder="رقم الأوردر — مثال: 5001"
-          onkeydown="if(event.key==='Enter')doGetOrderLog()">
+          onkeydown="if(event.key==='Enter')doGetOrderLog()" style="max-width:220px;">
         <button class="btn btn-primary" id="logSearchBtn" onclick="doGetOrderLog()">عرض السجل</button>
         <button class="btn btn-outline btn-sm" id="logExportBtn" onclick="exportOrderLog()" style="display:none;">⬇️ Excel</button>
       </div>
     </div>
   </div>
   <div id="orderLogContent" style="display:none;">
-    <!-- [NEW v2.2.0] Reconciliation Panel -->
     <div id="reconPanel"></div>
     <div class="card">
       <div class="card-header" id="orderLogCardHeader">سجل العمليات</div>
       <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;">
         <table class="data-table">
-          <!-- [MOD v2.2.0] أُضيف عمود الموظف + سعر الأوردر بدل Shopify outstanding -->
           <thead><tr>
             <th>#</th><th>التاريخ والوقت</th><th>الموظف</th><th>المبلغ المُدخل</th>
             <th>الرصيد السابق</th><th>الرصيد الجديد</th><th>رقم العملية</th>
@@ -623,35 +618,69 @@ details>summary:hover{color:var(--accent);}
   </div>
 </div>
 
-<!-- §LOG -->
+<!-- §LOG — سجل العمليات -->
 <div class="page" id="page-log">
-  <div class="card">
-    <div class="card-header">فلترة وبحث</div>
-    <div class="card-body">
-      <div class="log-search-row" style="margin-bottom:8px;">
+
+  <!-- Filters Card — Inventory Audit Style -->
+  <div class="log-filters-card">
+    <div class="log-filters-header" onclick="toggleLogFilters()">
+      <div class="log-filters-title">
+        <span style="font-size:14px;">▼</span>
+        الفلاتر
+        <span id="activeFiltersCount" class="tab-badge" style="display:none;">0</span>
+      </div>
+      <button class="clear-filters-btn" onclick="event.stopPropagation();clearLogFilters()">✕ مسح كل الفلاتر</button>
+    </div>
+    <div id="logFiltersBody" class="log-filters-body">
+
+      <!-- Row 1: بحث + موظف -->
+      <div class="log-filter-row">
+        <span class="log-filter-lbl">بحث:</span>
         <input class="log-input" id="logSearch" type="text" placeholder="رقم أوردر أو ملاحظة..."
-          oninput="clearTimeout(logSearchTimer);logSearchTimer=setTimeout(()=>fetchLog(1),400)">
+          oninput="clearTimeout(logSearchTimer);logSearchTimer=setTimeout(()=>fetchLog(1),400)" style="max-width:280px;">
+        <span class="log-filter-lbl">الموظف:</span>
         <select class="log-select" id="logEmpFilter" onchange="fetchLog(1)">
           <option value="">— كل الموظفين —</option>
         </select>
         <button class="btn btn-outline btn-sm" onclick="exportLogGeneral()">⬇️ Excel</button>
       </div>
-      <!-- [NEW v2.2.0] Date Range Filter -->
-      <div class="log-search-row">
-        <span style="font-size:11px;color:var(--text-muted);white-space:nowrap;">من:</span>
-        <input class="log-date" id="logDateFrom" type="date" onchange="fetchLog(1)">
-        <span style="font-size:11px;color:var(--text-muted);white-space:nowrap;">إلى:</span>
-        <input class="log-date" id="logDateTo"   type="date" onchange="fetchLog(1)">
-        <button class="btn btn-outline btn-sm" onclick="clearDateFilter()">مسح التاريخ</button>
+
+      <!-- Row 2: فترة سريعة -->
+      <div class="log-filter-row">
+        <span class="log-filter-lbl">فترة:</span>
+        <div class="quick-btns">
+          <button class="qbtn" id="lqbtn-today"     onclick="logQuickDate('today',this)">اليوم</button>
+          <button class="qbtn" id="lqbtn-yesterday" onclick="logQuickDate('yesterday',this)">أمس</button>
+          <button class="qbtn" id="lqbtn-7d"        onclick="logQuickDate('7d',this)">آخر 7 أيام</button>
+          <button class="qbtn" id="lqbtn-30d"       onclick="logQuickDate('30d',this)">آخر 30 يوم</button>
+          <button class="qbtn" id="lqbtn-90d"       onclick="logQuickDate('90d',this)">آخر 90 يوم</button>
+          <button class="qbtn" id="lqbtn-month"     onclick="logQuickDate('month',this)">الشهر الحالي</button>
+          <button class="qbtn" id="lqbtn-lastmonth" onclick="logQuickDate('lastmonth',this)">الشهر السابق</button>
+          <button class="qbtn" id="lqbtn-year"      onclick="logQuickDate('year',this)">العام الحالي</button>
+        </div>
+      </div>
+
+      <!-- Row 3: من/إلى -->
+      <div class="log-filter-row">
+        <span class="log-filter-lbl">من:</span>
+        <input class="log-date" id="logDateFrom" type="date" onchange="clearLogQuickBtns();fetchLog(1)">
+        <span class="log-filter-lbl">إلى:</span>
+        <input class="log-date" id="logDateTo"   type="date" onchange="clearLogQuickBtns();fetchLog(1)">
       </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      العمليات
+
+    <!-- Results bar -->
+    <div class="log-results-bar">
+      <div class="log-results-count">
+        إجمالي السجل: <strong id="logTotalCount">—</strong> &nbsp;|&nbsp; نتائج الفلتر: <strong id="logFilteredCount">—</strong>
+      </div>
       <span id="logTotalBadge" class="tab-badge" style="display:none;">0</span>
     </div>
-    <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;">
+  </div>
+
+  <!-- Log Table -->
+  <div class="card">
+    <div class="table-wrap" style="border-radius:var(--radius);border:none;">
       <table class="data-table">
         <thead><tr>
           <th>#</th><th>التاريخ والوقت</th><th>الموظف</th><th>رقم الأوردر</th>
@@ -668,6 +697,7 @@ details>summary:hover{color:var(--accent);}
 
 <!-- Tab: التحليلات -->
 <div class="page" id="page-analytics">
+
   <!-- Date Bar -->
   <div class="ana-date-bar">
     <span class="ana-date-label">من</span>
@@ -695,7 +725,7 @@ details>summary:hover{color:var(--accent);}
 
   <!-- Loading skeleton -->
   <div id="anaSkeleton" style="display:none;">
-    <div class="kpi-grid">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
       <div class="ana-skeleton sk-kpi"></div><div class="ana-skeleton sk-kpi"></div>
       <div class="ana-skeleton sk-kpi"></div><div class="ana-skeleton sk-kpi"></div>
     </div>
@@ -712,42 +742,62 @@ details>summary:hover{color:var(--accent);}
   <!-- Analytics Content -->
   <div id="anaContent" style="display:none;">
 
-    <!-- §A KPIs -->
-    <div class="kpi-grid">
-      <div class="kpi-card kpi-border-green">
-        <div class="kpi-icon">💰</div>
-        <div class="kpi-lbl">إجمالي الكاش المودَع</div>
-        <div class="kpi-val green" id="kpiTotal">—</div>
-        <div class="kpi-sub" id="kpiTotalSub">ج.م</div>
+    <!-- §A KPIs — Collapsible -->
+    <div class="ana-section" id="sec-kpis">
+      <div class="ana-section-header" onclick="anaToggle('kpis')">
+        <div class="ana-section-title">
+          💰 ملخص الفترة
+          <span class="ana-section-subtitle" id="kpiRangeLabel"></span>
+        </div>
+        <span class="ana-section-arrow open" id="kpisArrow">▼</span>
       </div>
-      <div class="kpi-card kpi-border-blue">
-        <div class="kpi-icon">📦</div>
-        <div class="kpi-lbl">أوردرات مودَعة</div>
-        <div class="kpi-val blue" id="kpiOrders">—</div>
-        <div class="kpi-sub" id="kpiOrdersSub">أوردر فريد</div>
-      </div>
-      <div class="kpi-card kpi-border-purple">
-        <div class="kpi-icon">🔢</div>
-        <div class="kpi-lbl">عدد العمليات</div>
-        <div class="kpi-val purple" id="kpiOps">—</div>
-        <div class="kpi-sub">إجمالي الإيداعات</div>
-      </div>
-      <div class="kpi-card kpi-border-amber">
-        <div class="kpi-icon">⏳</div>
-        <div class="kpi-lbl">في انتظار الخزينة</div>
-        <div class="kpi-val amber" id="kpiPending">—</div>
-        <div class="kpi-sub" id="kpiPendingSub">أوردر</div>
+      <div class="ana-section-body" id="kpisBody">
+        <div class="ana-section-padded">
+          <div class="kpi-grid">
+            <div class="kpi-card kpi-border-green">
+              <div class="kpi-icon">💰</div>
+              <div class="kpi-lbl">إجمالي الكاش المودَع</div>
+              <div class="kpi-val green" id="kpiTotal">—</div>
+              <div class="kpi-sub" id="kpiTotalSub">ج.م</div>
+            </div>
+            <div class="kpi-card kpi-border-blue">
+              <div class="kpi-icon">📦</div>
+              <div class="kpi-lbl">أوردرات مودَعة</div>
+              <div class="kpi-val blue" id="kpiOrders">—</div>
+              <div class="kpi-sub" id="kpiOrdersSub">أوردر فريد</div>
+            </div>
+            <div class="kpi-card kpi-border-purple">
+              <div class="kpi-icon">🔢</div>
+              <div class="kpi-lbl">عدد العمليات</div>
+              <div class="kpi-val purple" id="kpiOps">—</div>
+              <div class="kpi-sub">إجمالي الإيداعات</div>
+            </div>
+            <div class="kpi-card kpi-border-amber">
+              <div class="kpi-icon">⏳</div>
+              <div class="kpi-lbl">في انتظار الخزينة</div>
+              <div class="kpi-val amber" id="kpiPending">—</div>
+              <div class="kpi-sub" id="kpiPendingSub">أوردر</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- §B Daily Chart -->
-    <div class="chart-card">
-      <div class="chart-card-title">📈 الكاش المودَع يومياً</div>
-      <div class="chart-wrap tall"><canvas id="anaDailyChart"></canvas></div>
+    <!-- §B Daily Chart — Collapsible -->
+    <div class="ana-section" id="sec-daily">
+      <div class="ana-section-header" onclick="anaToggle('daily')">
+        <div class="ana-section-title">📈 الكاش المودَع يومياً</div>
+        <span class="ana-section-arrow open" id="dailyArrow">▼</span>
+      </div>
+      <div class="ana-section-body" id="dailyBody">
+        <div class="ana-section-padded">
+          <div class="chart-wrap tall"><canvas id="anaDailyChart"></canvas></div>
+        </div>
+      </div>
     </div>
 
-    <!-- §C Pending Treasury -->
-    <div class="ana-section" id="pendingSection">
+    <!-- §C Pending Treasury — Collapsible -->
+    <div class="ana-section" id="sec-pending">
       <div class="ana-section-header" onclick="anaToggle('pending')">
         <div class="ana-section-title">
           ⏳ في انتظار الخزينة
@@ -756,74 +806,96 @@ details>summary:hover{color:var(--accent);}
         <span class="ana-section-arrow open" id="pendingArrow">▼</span>
       </div>
       <div class="ana-section-body" id="pendingBody">
-        <div class="ana-filter-row">
-          <span class="ana-filter-lbl">الكوريير:</span>
-          <select class="ana-filter-sel" id="pendingCourierF" onchange="filterPending()"><option value="">الكل</option></select>
-          <span class="ana-filter-lbl">النوع:</span>
-          <select class="ana-filter-sel" id="pendingTypeF" onchange="filterPending()">
-            <option value="">الكل</option>
-            <option value="أساسي">أساسي</option>
-            <option value="استبدال">استبدال</option>
-            <option value="استرجاع">استرجاع</option>
-          </select>
-        </div>
-        <div class="ana-legend">
-          <span><span class="legend-dot" style="background:var(--green);"></span>أقل من 3 أيام</span>
-          <span><span class="legend-dot" style="background:var(--amber);"></span>من 3 إلى 7 أيام</span>
-          <span><span class="legend-dot" style="background:var(--red);"></span>أكثر من 7 أيام</span>
-        </div>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead><tr>
-              <th>رقم الأوردر</th><th>تاريخ التحصيل</th><th>المبلغ (ج.م)</th>
-              <th>الكوريير</th><th>نوع الأوردر</th><th>منذ كم يوم</th>
-            </tr></thead>
-            <tbody id="pendingTbody"></tbody>
-          </table>
-        </div>
-        <div id="pendingEmpty" class="empty-state" style="display:none;"><div class="empty-state-icon">✅</div><div style="font-size:13px;">لا توجد أوردرات في انتظار الخزينة</div></div>
-      </div>
-    </div>
-
-    <!-- §D Charts Row -->
-    <div class="chart-grid">
-      <div class="chart-card" style="margin-bottom:0;">
-        <div class="chart-card-title">🚚 توزيع حسب الكوريير</div>
-        <div class="chart-wrap"><canvas id="anaCourierChart"></canvas></div>
-      </div>
-      <div class="chart-card" style="margin-bottom:0;">
-        <div class="chart-card-title">🔄 توزيع حسب نوع الأوردر</div>
-        <div class="chart-wrap"><canvas id="anaTypeChart"></canvas></div>
-      </div>
-    </div>
-
-    <!-- §D Tables -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
-      <div class="card" style="margin-bottom:0;">
-        <div class="card-header">🚚 تفصيل حسب الكوريير</div>
-        <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;">
-          <table class="data-table">
-            <thead><tr><th>الكوريير</th><th>مودَع (ج.م)</th><th>أوردرات</th><th>انتظار</th><th>مبلغ الانتظار</th></tr></thead>
-            <tbody id="courierTbody"></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card" style="margin-bottom:0;">
-        <div class="card-header">🔄 تفصيل حسب النوع</div>
-        <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;">
-          <table class="data-table">
-            <thead><tr><th>النوع</th><th>مودَع (ج.م)</th><th>أوردرات</th><th>انتظار</th><th>مبلغ الانتظار</th></tr></thead>
-            <tbody id="typeTbody"></tbody>
-          </table>
+        <div class="ana-section-padded">
+          <div class="ana-filter-row" style="margin-bottom:10px;">
+            <span class="ana-filter-lbl">الكوريير:</span>
+            <select class="ana-filter-sel" id="pendingCourierF" onchange="filterPending()"><option value="">الكل</option></select>
+            <span class="ana-filter-lbl">النوع:</span>
+            <select class="ana-filter-sel" id="pendingTypeF" onchange="filterPending()">
+              <option value="">الكل</option>
+              <option value="أساسي">أساسي</option>
+              <option value="استبدال">استبدال</option>
+              <option value="استرجاع">استرجاع</option>
+            </select>
+          </div>
+          <div class="ana-legend">
+            <span><span class="legend-dot" style="background:var(--green);"></span>أقل من 3 أيام</span>
+            <span><span class="legend-dot" style="background:var(--amber);"></span>من 3 إلى 7 أيام</span>
+            <span><span class="legend-dot" style="background:var(--red);"></span>أكثر من 7 أيام</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr>
+                <th>رقم الأوردر</th><th>تاريخ التحصيل</th><th>المبلغ (ج.م)</th>
+                <th>الكوريير</th><th>نوع الأوردر</th><th>منذ كم يوم</th>
+              </tr></thead>
+              <tbody id="pendingTbody"></tbody>
+            </table>
+          </div>
+          <div id="pendingEmpty" class="empty-state" style="display:none;"><div class="empty-state-icon">✅</div><div style="font-size:13px;">لا توجد أوردرات في انتظار الخزينة</div></div>
         </div>
       </div>
     </div>
 
-    <!-- §E Anomaly Detection -->
-    <div style="margin-top:14px;">
-      <div style="font-size:11.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">🚨 Anomaly Detection</div>
+    <!-- §D Courier Chart — Collapsible -->
+    <div class="ana-section" id="sec-courier">
+      <div class="ana-section-header" onclick="anaToggle('courier')">
+        <div class="ana-section-title">🚚 توزيع حسب الكوريير</div>
+        <span class="ana-section-arrow open" id="courierArrow">▼</span>
+      </div>
+      <div class="ana-section-body" id="courierBody">
+        <div class="ana-section-padded">
+          <div class="chart-grid-2" style="margin-bottom:14px;">
+            <div>
+              <div class="chart-section-title">مودَع vs انتظار (ج.م)</div>
+              <div class="chart-wrap"><canvas id="anaCourierChart"></canvas></div>
+            </div>
+            <div>
+              <div class="chart-section-title">تفصيل الأرقام</div>
+              <div class="table-wrap" style="max-height:240px;overflow-y:auto;">
+                <table class="data-table">
+                  <thead><tr><th>الكوريير</th><th>مودَع (ج.م)</th><th>أوردرات</th><th>انتظار</th><th>مبلغ الانتظار</th></tr></thead>
+                  <tbody id="courierTbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- 3A: Validation Warnings -->
+    <!-- §E Order Type Chart — Collapsible -->
+    <div class="ana-section" id="sec-ordertype">
+      <div class="ana-section-header" onclick="anaToggle('ordertype')">
+        <div class="ana-section-title">🔄 توزيع حسب نوع الأوردر</div>
+        <span class="ana-section-arrow open" id="ordertypeArrow">▼</span>
+      </div>
+      <div class="ana-section-body" id="ordertypeBody">
+        <div class="ana-section-padded">
+          <div class="chart-grid-2">
+            <div>
+              <div class="chart-section-title">نسبة الكاش المودَع</div>
+              <div class="chart-wrap"><canvas id="anaTypeChart"></canvas></div>
+            </div>
+            <div>
+              <div class="chart-section-title">تفصيل الأرقام</div>
+              <div class="table-wrap" style="max-height:240px;overflow-y:auto;">
+                <table class="data-table">
+                  <thead><tr><th>النوع</th><th>مودَع (ج.م)</th><th>أوردرات</th><th>انتظار</th><th>مبلغ الانتظار</th></tr></thead>
+                  <tbody id="typeTbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- §F Anomaly Detection — header + 4 sub-sections all collapsible -->
+    <div style="margin-top:4px;">
+      <div style="font-size:11.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;padding-right:2px;">🚨 Anomaly Detection</div>
+
+      <!-- Validation Warnings -->
       <div class="ana-section">
         <div class="ana-section-header" onclick="anaToggle('warnSection')">
           <div class="ana-section-title">
@@ -832,17 +904,19 @@ details>summary:hover{color:var(--accent);}
           </div>
           <span class="ana-section-arrow" id="warnSectionArrow">▼</span>
         </div>
-        <div class="ana-section-body" id="warnSectionBody" style="display:none;padding-top:10px;">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>قبل</th><th>بعد</th><th>تفاصيل التحذير</th></tr></thead>
-              <tbody id="warnTbody"></tbody>
-            </table>
+        <div class="ana-section-body collapsed" id="warnSectionBody">
+          <div class="ana-section-padded">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>قبل</th><th>بعد</th><th>تفاصيل التحذير</th></tr></thead>
+                <tbody id="warnTbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 3B: Repeat Registrations -->
+      <!-- Repeat Registrations -->
       <div class="ana-section" style="margin-top:6px;">
         <div class="ana-section-header" onclick="anaToggle('repeatSection')">
           <div class="ana-section-title">
@@ -851,17 +925,19 @@ details>summary:hover{color:var(--accent);}
           </div>
           <span class="ana-section-arrow" id="repeatSectionArrow">▼</span>
         </div>
-        <div class="ana-section-body" id="repeatSectionBody" style="display:none;padding-top:10px;">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>الأوردر</th><th>عدد العمليات</th><th>إجمالي المودَع (ج.م)</th></tr></thead>
-              <tbody id="repeatTbody"></tbody>
-            </table>
+        <div class="ana-section-body collapsed" id="repeatSectionBody">
+          <div class="ana-section-padded">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>الأوردر</th><th>عدد العمليات</th><th>إجمالي المودَع (ج.م)</th></tr></thead>
+                <tbody id="repeatTbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 3C: Override Approvals -->
+      <!-- Override Approvals -->
       <div class="ana-section" style="margin-top:6px;">
         <div class="ana-section-header" onclick="anaToggle('overrideSection')">
           <div class="ana-section-title">
@@ -870,17 +946,19 @@ details>summary:hover{color:var(--accent);}
           </div>
           <span class="ana-section-arrow" id="overrideSectionArrow">▼</span>
         </div>
-        <div class="ana-section-body" id="overrideSectionBody" style="display:none;padding-top:10px;">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>تفاصيل</th></tr></thead>
-              <tbody id="overrideTbody"></tbody>
-            </table>
+        <div class="ana-section-body collapsed" id="overrideSectionBody">
+          <div class="ana-section-padded">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>تفاصيل</th></tr></thead>
+                <tbody id="overrideTbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 3D: Shopify Write Failures -->
+      <!-- Shopify Write Failures -->
       <div class="ana-section" style="margin-top:6px;">
         <div class="ana-section-header" onclick="anaToggle('failSection')">
           <div class="ana-section-title">
@@ -889,17 +967,20 @@ details>summary:hover{color:var(--accent);}
           </div>
           <span class="ana-section-arrow" id="failSectionArrow">▼</span>
         </div>
-        <div class="ana-section-body" id="failSectionBody" style="display:none;padding-top:10px;">
-          <div class="ana-info-box ana-info-warn">❗ هذه الأوردرات في D1 لكن Shopify لم يُكتَب — تحتاج تدخل يدوي</div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>السبب</th></tr></thead>
-              <tbody id="failTbody"></tbody>
-            </table>
+        <div class="ana-section-body collapsed" id="failSectionBody">
+          <div class="ana-section-padded">
+            <div class="ana-info-box ana-info-warn">❗ هذه الأوردرات في D1 لكن Shopify لم يُكتَب — تحتاج تدخل يدوي</div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>الأوردر</th><th>الوقت</th><th>Δ</th><th>السبب</th></tr></thead>
+                <tbody id="failTbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div><!-- end anaContent -->
 
   <!-- Initial state -->
@@ -909,8 +990,6 @@ details>summary:hover{color:var(--accent);}
   </div>
 </div><!-- end page-analytics -->
 
-
-
 <script>
 // ══════════════════════════════════════════════════════════════
 // §CONFIG
@@ -919,7 +998,7 @@ const LS_URL       = 'treasury_worker_url';
 const LS_SECRET    = 'treasury_worker_secret';
 const LS_ADMIN_URL = 'admin_worker_url';
 
-let currentEmployee = null; // { username, displayName } — JS memory only
+let currentEmployee = null;
 
 function getConfig() {
   return {
@@ -960,6 +1039,10 @@ window.addEventListener('DOMContentLoaded', () => {
   setupDragDrop();
   document.getElementById('textInput').addEventListener('input', onTextChange);
   if (isConfigured()) loadEmployeesList();
+  // Init analytics dates
+  const t = new Date(), pad = n => String(n).padStart(2,'0');
+  document.getElementById('anaTo').value   = `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+  document.getElementById('anaFrom').value = `${t.getFullYear()}-${pad(t.getMonth()+1)}-01`;
 });
 
 function loadSettings() {
@@ -1334,7 +1417,6 @@ async function doPreview() {
   finally { btn.disabled = false; btn.innerHTML = '🔍 معاينة وتحقق من Shopify'; }
 }
 
-// [MOD v2.2.0] renderPreviewTable — totalPrice + needsOverride + reconciliationWarning
 function renderPreviewTable(data) {
   const tbody = document.getElementById('previewTbody'); tbody.innerHTML = '';
   let ok = 0, warn = 0, err = 0, overrideCount = 0, totalDelta = 0;
@@ -1389,7 +1471,6 @@ function renderPreviewTable(data) {
   }
 }
 
-// [NEW v2.2.0] خلية تنبيه في المعاينة — تدمج validation + reconciliation + override badge
 function previewWarningCell(r) {
   if (!r.success) return `<span class="error-text">❌ ${esc(r.error)}</span>`;
   const parts = [];
@@ -1404,7 +1485,6 @@ function previewWarningCell(r) {
   return parts.length ? parts.join('') : '<span class="muted">—</span>';
 }
 
-// [NEW v2.2.0] فتح modal التأكيد قبل التسجيل
 function doRegisterFn() {
   if (!previewDone || !parsedEntries.length) return;
   const validPairs = parsedEntries
@@ -1414,17 +1494,12 @@ function doRegisterFn() {
   openConfirmModal(validPairs);
 }
 
-// [NEW v2.2.0] Confirm modal — clone button pattern
 function openConfirmModal(validPairs) {
   const hasOverride = validPairs.some(p => p.preview.needsOverride);
-
   document.getElementById('confirmModalBody').innerHTML = buildConfirmModalBody(validPairs, hasOverride);
-
-  // Clone pattern — removes previous listeners
   const oldBtn = document.getElementById('confirmRegisterBtn');
   const newBtn  = oldBtn.cloneNode(true);
   oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-
   if (hasOverride) {
     newBtn.className = 'btn btn-danger';
     newBtn.innerHTML = '⚠️ تأكيد مع Override';
@@ -1433,7 +1508,6 @@ function openConfirmModal(validPairs) {
     newBtn.innerHTML = '✅ تأكيد التسجيل';
   }
   newBtn.addEventListener('click', () => doConfirmedRegister(validPairs, hasOverride));
-
   document.getElementById('confirmModal').classList.remove('hidden');
 }
 
@@ -1442,11 +1516,11 @@ function closeConfirmModal() {
 }
 
 function buildConfirmModalBody(validPairs, hasOverride) {
-  const totalDelta   = validPairs.reduce((s, p) => s + (p.entry.delta || 0), 0);
-  const warnCount    = validPairs.filter(p => p.preview.validationWarning && !p.preview.needsOverride).length;
+  const totalDelta    = validPairs.reduce((s, p) => s + (p.entry.delta || 0), 0);
+  const warnCount     = validPairs.filter(p => p.preview.validationWarning && !p.preview.needsOverride).length;
   const overrideCount = validPairs.filter(p => p.preview.needsOverride).length;
-  const reconCount   = validPairs.filter(p => p.preview.reconciliationWarning).length;
-  const failCount    = previewData.filter(r => !r.success).length;
+  const reconCount    = validPairs.filter(p => p.preview.reconciliationWarning).length;
+  const failCount     = previewData.filter(r => !r.success).length;
 
   let html = `<div class="summary-grid" style="margin-bottom:14px;">
     <div class="summary-card blue"><div class="s-num">${validPairs.length}</div><div class="s-lbl">أوردر للتسجيل</div></div>
@@ -1481,11 +1555,9 @@ function buildConfirmModalBody(validPairs, hasOverride) {
   return html;
 }
 
-// [NEW v2.2.0] التسجيل الفعلي بعد التأكيد
 async function doConfirmedRegister(validPairs, overrideWarning) {
   closeConfirmModal();
   const validEntries = validPairs.map(p => p.entry);
-
   const btn = document.getElementById('registerBtn');
   btn.disabled = true; btn.innerHTML = `<div class="spinner"></div> جاري التسجيل (${validEntries.length})...`;
   try {
@@ -1580,10 +1652,7 @@ async function doGetOrderLog() {
     }
     if (!res.success) throw new Error(res.error || 'خطأ');
     orderLogData = res;
-
-    // [NEW v2.2.0] Reconciliation panel
     renderReconciliationPanel(res);
-
     if (!res.entries || res.entries.length === 0) {
       document.getElementById('orderLogEmptyText').textContent = `لا توجد عمليات لـ ${res.orderName}`;
       document.getElementById('orderLogEmpty').style.display   = '';
@@ -1601,18 +1670,13 @@ async function doGetOrderLog() {
   finally { btn.disabled = false; btn.textContent = 'عرض السجل'; }
 }
 
-// [NEW v2.2.0] Reconciliation panel render
 function renderReconciliationPanel(res) {
   const panel = document.getElementById('reconPanel');
   if (!res.reconciliation && !res.currentShopify) { panel.innerHTML = ''; return; }
-
   const recon   = res.reconciliation || {};
   const shopify = res.currentShopify  || {};
   const inSync  = recon.inSync !== false;
-
   let html = `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px;">`;
-
-  // D1 SUM
   html += `<div class="recon-panel ${inSync ? 'ok' : 'err'}" style="flex:1;min-width:160px;">
     <span class="recon-icon">${inSync ? '✅' : '⚠️'}</span>
     <div>
@@ -1620,8 +1684,6 @@ function renderReconciliationPanel(res) {
       <div class="recon-detail">${inSync ? 'متطابق مع Shopify' : `Shopify: ${fmt(recon.shopifyAmount)} — فرق: ${fmt((recon.shopifyAmount||0)-(recon.d1Sum||0))}`}</div>
     </div>
   </div>`;
-
-  // Shopify current
   if (shopify.treasuryAmount != null) {
     html += `<div class="recon-panel ${inSync ? 'ok' : 'warn'}" style="flex:1;min-width:160px;">
       <span class="recon-icon">🏪</span>
@@ -1635,7 +1697,6 @@ function renderReconciliationPanel(res) {
   panel.innerHTML = html;
 }
 
-// [MOD v2.2.0] renderOrderLogTable — الموظف + compensating entries + totalPrice
 function renderOrderLogTable(entries) {
   const tbody = document.getElementById('orderLogTbody'); tbody.innerHTML = '';
   entries.forEach((e, i) => {
@@ -1663,28 +1724,108 @@ function renderOrderLogTable(entries) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// §LOG-JS
+// §LOG-JS — Advanced Filters (Inventory Audit Style)
 // ══════════════════════════════════════════════════════════════
 let logCurrentPage  = 1;
 let logTotalPages   = 1;
 let logSearchTimer  = null;
+let logFiltersOpen  = true;
 const LOG_PAGE_SIZE = 100;
 
-function clearDateFilter() {
-  document.getElementById('logDateFrom').value = '';
-  document.getElementById('logDateTo').value   = '';
+// Toggle filters card
+function toggleLogFilters() {
+  logFiltersOpen = !logFiltersOpen;
+  document.getElementById('logFiltersBody').style.display = logFiltersOpen ? '' : 'none';
+}
+
+// Quick date buttons for log tab
+function logQuickDate(mode, btn) {
+  // Clear active state from all log quick buttons
+  clearLogQuickBtns();
+  if (btn) btn.classList.add('active');
+
+  const t = new Date(), pad = n => String(n).padStart(2,'0');
+  const todayStr = `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+
+  const from_el = document.getElementById('logDateFrom');
+  const to_el   = document.getElementById('logDateTo');
+
+  if (mode === 'today') {
+    from_el.value = todayStr; to_el.value = todayStr;
+  } else if (mode === 'yesterday') {
+    const y = new Date(t); y.setDate(y.getDate()-1);
+    const ys = `${y.getFullYear()}-${pad(y.getMonth()+1)}-${pad(y.getDate())}`;
+    from_el.value = ys; to_el.value = ys;
+  } else if (mode === '7d') {
+    const d = new Date(t); d.setDate(d.getDate()-6);
+    from_el.value = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    to_el.value   = todayStr;
+  } else if (mode === '30d') {
+    const d = new Date(t); d.setDate(d.getDate()-29);
+    from_el.value = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    to_el.value   = todayStr;
+  } else if (mode === '90d') {
+    const d = new Date(t); d.setDate(d.getDate()-89);
+    from_el.value = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    to_el.value   = todayStr;
+  } else if (mode === 'month') {
+    from_el.value = `${t.getFullYear()}-${pad(t.getMonth()+1)}-01`;
+    to_el.value   = todayStr;
+  } else if (mode === 'lastmonth') {
+    const first = new Date(t.getFullYear(), t.getMonth()-1, 1);
+    const last  = new Date(t.getFullYear(), t.getMonth(), 0);
+    from_el.value = `${first.getFullYear()}-${pad(first.getMonth()+1)}-01`;
+    to_el.value   = `${last.getFullYear()}-${pad(last.getMonth()+1)}-${pad(last.getDate())}`;
+  } else if (mode === 'year') {
+    from_el.value = `${t.getFullYear()}-01-01`;
+    to_el.value   = todayStr;
+  }
+
   fetchLog(1);
+}
+
+function clearLogQuickBtns() {
+  ['today','yesterday','7d','30d','90d','month','lastmonth','year'].forEach(m => {
+    const b = document.getElementById(`lqbtn-${m}`);
+    if (b) b.classList.remove('active');
+  });
+}
+
+// Clear all filters
+function clearLogFilters() {
+  document.getElementById('logSearch').value    = '';
+  document.getElementById('logEmpFilter').value = '';
+  document.getElementById('logDateFrom').value  = '';
+  document.getElementById('logDateTo').value    = '';
+  clearLogQuickBtns();
+  updateActiveFiltersCount();
+  fetchLog(1);
+}
+
+function updateActiveFiltersCount() {
+  const search   = document.getElementById('logSearch').value.trim();
+  const employee = document.getElementById('logEmpFilter').value;
+  const from     = document.getElementById('logDateFrom').value;
+  const to       = document.getElementById('logDateTo').value;
+  const count = [search, employee, from||to].filter(Boolean).length;
+  const badge = document.getElementById('activeFiltersCount');
+  if (count > 0) {
+    badge.textContent = count; badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
 }
 
 async function fetchLog(page = 1) {
   logCurrentPage = page;
   const search   = document.getElementById('logSearch').value.trim()   || null;
   const employee = document.getElementById('logEmpFilter').value        || null;
-  // [NEW v2.2.0] date range — convert YYYY-MM-DD to ISO for Worker
   const fromVal  = document.getElementById('logDateFrom').value;
   const toVal    = document.getElementById('logDateTo').value;
   const dateFrom = fromVal ? `${fromVal}T00:00:00.000Z` : null;
-  const dateTo   = toVal   ? `${toVal}T00:00:00.000Z`   : null; // Worker replaces time with 23:59:59.999Z
+  const dateTo   = toVal   ? `${toVal}T00:00:00.000Z`   : null;
+
+  updateActiveFiltersCount();
 
   const tbody = document.getElementById('logTbody');
   tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ جاري التحميل...</td></tr>`;
@@ -1697,6 +1838,8 @@ async function fetchLog(page = 1) {
     const total   = dataCount.total  || 0;
     logTotalPages = Math.max(1, Math.ceil(total / LOG_PAGE_SIZE));
 
+    // Update results bar
+    document.getElementById('logFilteredCount').textContent = total.toLocaleString('en-US');
     const badge = document.getElementById('logTotalBadge');
     badge.textContent = total; badge.style.display = total > 0 ? '' : 'none';
 
@@ -1806,7 +1949,6 @@ async function exportOrderLog() {
       ovr:  e.overrideWarning   ? 'نعم' : 'لا',
       warn: e.validationWarning || '—',
     }));
-    // Reconciliation summary at bottom
     if (orderLogData.reconciliation) {
       ws.addRow({});
       const r = orderLogData.reconciliation;
@@ -1850,15 +1992,32 @@ async function exportLogGeneral() {
   } catch (err) { showToast('خطأ في التصدير: ' + err.message, 'error'); }
 }
 
-
 // ══════════════════════════════════════════════════════════════
-// §ANALYTICS-JS
+// §ANALYTICS-JS — Fully Collapsible Sections
 // ══════════════════════════════════════════════════════════════
 let anaCache = null, anaCacheKey = '';
 let anaDailyChart = null, anaCourierChart = null, anaTypeChart = null;
 let _allPending = [];
 
-// Chart defaults for light theme
+// Unified toggle — works for ALL ana-sections
+function anaToggle(name) {
+  const body  = document.getElementById(`${name}Body`);
+  const arrow = document.getElementById(`${name}Arrow`);
+  if (!body) return;
+  const isCollapsed = body.classList.contains('collapsed');
+  if (isCollapsed) {
+    body.classList.remove('collapsed');
+    if (arrow) arrow.classList.add('open');
+    // If chart section just opened, resize charts
+    if (name === 'daily' && anaDailyChart)    anaDailyChart.resize();
+    if (name === 'courier' && anaCourierChart) anaCourierChart.resize();
+    if (name === 'ordertype' && anaTypeChart)  anaTypeChart.resize();
+  } else {
+    body.classList.add('collapsed');
+    if (arrow) arrow.classList.remove('open');
+  }
+}
+
 const ANA_CHART_OPTS = {
   responsive: true, maintainAspectRatio: false,
   plugins: { legend: { labels: { color: '#6b7280', font: { size: 11 } } } },
@@ -1866,7 +2025,6 @@ const ANA_CHART_OPTS = {
 const ANA_PALETTE = ['#2563eb','#16a34a','#d97706','#7c3aed','#dc2626','#0891b2','#db2777','#65a30d'];
 
 function anaOnTabOpen() {
-  // Init default "to" date on first open
   if (!document.getElementById('anaTo').value)
     document.getElementById('anaTo').value = new Date().toISOString().slice(0,10);
 }
@@ -1897,7 +2055,6 @@ async function loadAnalytics(force = false) {
   const key  = `${from}|${to}`;
   if (!force && anaCache && anaCacheKey === key) { renderAnalytics(anaCache); return; }
 
-  // Show skeleton
   document.getElementById('anaInitial').style.display   = 'none';
   document.getElementById('anaContent').style.display   = 'none';
   document.getElementById('anaError').style.display     = 'none';
@@ -1924,13 +2081,27 @@ function renderAnalytics(data) {
     document.getElementById('anaShopifyWarn').style.display = 'flex';
     document.getElementById('anaShopifyWarnMsg').textContent = `تعذّر جلب Shopify: ${data.shopifyError} — إحصائيات D1 فقط`;
   }
+
+  // Update date range label in KPIs header
+  const dr = data.dateRange || {};
+  const rangeLabel = document.getElementById('kpiRangeLabel');
+  if (dr.from && dr.to) rangeLabel.textContent = `(${dr.from} → ${dr.to})`;
+
   const s = data.summary || {};
-  document.getElementById('kpiTotal').textContent   = fmt(s.totalDeposited);
+  document.getElementById('kpiTotal').textContent    = fmt(s.totalDeposited);
   document.getElementById('kpiTotalSub').textContent = `${fmt(s.totalDeposited)} ج.م خلال الفترة`;
   document.getElementById('kpiOrders').textContent   = fmt(s.totalOrders);
   document.getElementById('kpiOps').textContent      = fmt(s.totalOperations);
   document.getElementById('kpiPending').textContent  = fmt(s.pendingCount);
   document.getElementById('kpiPendingSub').textContent = `إجمالي ${fmt(s.pendingAmount)} ج.م`;
+
+  // Ensure main sections are open after render
+  ['kpis','daily','pending','courier','ordertype'].forEach(name => {
+    const body  = document.getElementById(`${name}Body`);
+    const arrow = document.getElementById(`${name}Arrow`);
+    if (body)  body.classList.remove('collapsed');
+    if (arrow) arrow.classList.add('open');
+  });
 
   anaRenderDailyChart(data.daily || []);
   anaRenderPending(data.pending || []);
@@ -1962,7 +2133,6 @@ function anaRenderDailyChart(daily) {
 
 function anaRenderPending(pending) {
   _allPending = pending;
-  // Populate courier filter
   const cf = document.getElementById('pendingCourierF');
   const prev = cf.value;
   cf.innerHTML = '<option value="">الكل</option>';
@@ -2066,25 +2236,21 @@ function anaRenderType(byType) {
 }
 
 function anaRenderAnomalies(anomalies) {
-  // 3A: Warnings
   anaRenderTbody('warnTbody', anomalies.warnings || [],
     r => `<td class="mono">${esc(r.order_name)}</td><td class="mono" style="font-size:11px;">${formatDateTime(r.timestamp)}</td><td>${deltaCell(r.delta)}</td><td class="amount-num">${fmt(r.value_before)}</td><td class="amount-num">${fmt(r.value_after)}</td><td class="warn-text" style="font-size:11px;">${esc((r.notes||'').slice(0,80))}</td>`,
     6);
   anaBadge('warnBadge', anomalies.warnings?.length || 0, 'amber', 'green');
 
-  // 3B: Repeats
   anaRenderTbody('repeatTbody', anomalies.repeats || [],
     r => `<td class="mono">${esc(r.order_name)}</td><td class="amount-neg" style="font-family:var(--font-mono);">${r.cnt}</td><td class="amount-num">${fmt(r.total)}</td>`,
     3);
   anaBadge('repeatBadge', anomalies.repeats?.length || 0, 'red', 'green');
 
-  // 3C: Overrides
   anaRenderTbody('overrideTbody', anomalies.overrides || [],
     r => `<td class="mono">${esc(r.order_name)}</td><td class="mono" style="font-size:11px;">${formatDateTime(r.timestamp)}</td><td>${deltaCell(r.delta)}</td><td class="warn-text" style="font-size:11px;">${esc((r.notes||'').slice(0,80))}</td>`,
     4);
   anaBadge('overrideBadge', anomalies.overrides?.length || 0, 'amber', 'green');
 
-  // 3D: Failures
   anaRenderTbody('failTbody', anomalies.failures || [],
     r => `<td class="mono">${esc(r.order_name)}</td><td class="mono" style="font-size:11px;">${formatDateTime(r.timestamp)}</td><td>${deltaCell(r.delta)}</td><td class="error-text" style="font-size:11px;">${esc((r.notes||'').replace('SHOPIFY_WRITE_FAILED — تعويض تلقائي: ','').slice(0,80))}</td>`,
     4);
@@ -2107,25 +2273,9 @@ function anaBadge(id, count, alertCls, okCls) {
   el.className   = `tab-badge ${count > 0 ? alertCls : okCls}`;
 }
 
-function anaToggle(name) {
-  const body  = document.getElementById(`${name}Body`);
-  const arrow = document.getElementById(`${name}Arrow`);
-  if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : '';
-  if (arrow) arrow.classList.toggle('open', !open);
-}
-
-// ── init analytics dates on page load ──
-window.addEventListener('DOMContentLoaded', () => {
-  const t   = new Date();
-  const pad = n => String(n).padStart(2,'0');
-  document.getElementById('anaTo').value   = `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
-  document.getElementById('anaFrom').value = `${t.getFullYear()}-${pad(t.getMonth()+1)}-01`;
-}, { once: false });
-
 // ══════════════════════════════════════════════════════════════
-
+// Utilities
+// ══════════════════════════════════════════════════════════════
 function toCairo(iso) { return new Date(new Date(iso).getTime() + 3*60*60*1000); }
 function formatDateTime(iso) {
   if (!iso) return '—';
