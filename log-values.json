@@ -1,0 +1,25 @@
+{
+  "tool": "treasury",
+  "since": null,
+  "types": {
+    "login": {
+      "result": null,
+      "stage": null,
+      "desc": "دخول موظف"
+    },
+    "logout": {
+      "result": null,
+      "stage": null,
+      "desc": "خروج موظف"
+    },
+    "deposit": {
+      "result": [
+        "error",
+        "success",
+        "warning"
+      ],
+      "stage": null,
+      "desc": "إيداع حصيلة COD في الخزنة"
+    }
+  }
+}
