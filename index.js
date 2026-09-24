@@ -1,6 +1,14 @@
 /**
  * treasury-cod-worker — EcomModa (ecommoda-dev)
- * v2.4.0 — Hardening pass (عقد النداءات + التوقيت + السجل)
+ * v2.4.1 — الحارس الديناميكي لقيم اللوج (الطبقة ٥ — worker-builder Step 7-ج)
+ *
+ * Changes from v2.4.0:
+ *   - [NEW] check-log-values.mjs اتصلّح — كان بيعدّي object shorthand
+ *           (`{ tool, type }`) في صمت. مفيش قيم ناقصة اتكشفت بالنسخة المصلَّحة.
+ *   - [NEW] LOG_REGISTRY + isRegisteredLogValue + noteUnregisteredLogValues
+ *           (§LOG-REG) — حارس وقت التشغيل جوّه writeLog. مفيش رفض كتابة أبدًا:
+ *           قيمة غير مسجّلة بتاخد extra._unregistered + UPSERT صامت في
+ *           log_value_alerts بعد الكتابة.
  *
  * Changes from v2.3.0:
  *   - [FIX] shopifyGQL بالعقد الكامل (Step 5A ①) — بترمي على ٥ حالات + backoff
@@ -34,14 +42,14 @@
  *   treasury_count        → number_integer
  *   treasury_last_updated → date_time (UTC ISO 8601)
  */
-// EcomModa — Treasury-COD (Worker v2.4.0)
-// skills: migration-playbook v2.5.0 · worker-builder v3.1.0 · html-builder v7.1.0 · constants v1.8.0 — 12-09-2026
+// EcomModa — Treasury-COD (Worker v2.4.1)
+// skills: migration-playbook v2.5.0 · worker-builder v3.7.0 · html-builder v7.1.0 · constants v3.1.0 · order-lifecycle v1.3.0 · shopify-graphql-helper v1.0.0 — 24-09-2026
 
 // ══════════════════════════════════════════════════════════════
 // §CONSTANTS
 // ══════════════════════════════════════════════════════════════
 const TOOL_NAME      = 'treasury';
-const WORKER_VERSION = '2.4.0';
+const WORKER_VERSION = '2.4.1';
 
 const ALLOWED_FINANCIAL_STATUSES = ['PAID', 'PARTIALLY_REFUNDED'];
 
@@ -63,6 +71,57 @@ const ORDERS_PER_WAVE = 10;
 
 // سقف صفحات التحليلات — 20 صفحة × 250 = 5000 أوردر لكل حالة مالية
 const ANALYTICS_MAX_PAGES = 20;
+
+// ══════════════════════════════════════════════════════════════
+// §LOG-REG — الحارس الديناميكي لقيم اللوج (الطبقة ٥ — worker-builder Step 7-ج)
+// ══════════════════════════════════════════════════════════════
+// قطعة الأداة دي بس من log-values.json اللي جنبها — بتتحدّث معاه في نفس الـ
+// commit. ممنوع شحن السجل الكامل بتاع كل الأدوات هنا.
+const LOG_REGISTRY = {
+  treasury: new Set(['login', 'logout', 'deposit']),
+};
+
+const isRegisteredLogValue = (tool, type) => !!LOG_REGISTRY[tool]?.has(type);
+
+// UPSERT على (source_tool, tool, type) — صف واحد لكل قيمة، hits بيعدّ.
+const LOG_ALERT_SQL = `
+  INSERT INTO log_value_alerts
+    (source_tool, tool, type, first_seen, last_seen, hits,
+     worker_version, sample_order_name, sample_employee, sample_notes)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  ON CONFLICT(source_tool, tool, type) DO UPDATE SET
+    last_seen         = excluded.last_seen,
+    hits              = log_value_alerts.hits + excluded.hits,
+    worker_version    = excluded.worker_version,
+    sample_order_name = excluded.sample_order_name,
+    sample_employee   = excluded.sample_employee,
+    sample_notes      = excluded.sample_notes,
+    status            = CASE WHEN log_value_alerts.status = 'ignored'
+                             THEN 'ignored' ELSE 'open' END
+`;
+
+// فشل التنبيه ممنوع يأثر على أي حاجة — try/catch صامت. بتجمّع التكرار جوّه
+// نفس الدفعة في صف واحد (hits) قبل ما تكتب.
+async function noteUnregisteredLogValues(db, entries) {
+  const byPair = new Map();
+  for (const e of entries) {
+    const key = `${e.tool}\u0000${e.type}`;
+    const acc = byPair.get(key);
+    if (acc) { acc.hits++; continue; }
+    byPair.set(key, { entry: e, hits: 1 });
+  }
+  const now = new Date().toISOString();
+  for (const { entry, hits } of byPair.values()) {
+    try {
+      await db.prepare(LOG_ALERT_SQL).bind(
+        TOOL_NAME, entry.tool ?? '(بدون tool)', entry.type ?? '(بدون type)',
+        now, now, hits, WORKER_VERSION ?? null,
+        entry.orderName ?? null, entry.employee ?? null,
+        entry.notes ? String(entry.notes).slice(0, 200) : null,
+      ).run();
+    } catch (e) { /* متعمّد: التنبيه فهرس، وفشله أهون من تعطيل الأداة */ }
+  }
+}
 
 // ══════════════════════════════════════════════════════════════
 // §CORS — Option B (strict) — financial/write tool
@@ -189,6 +248,13 @@ async function registerPin(db, username, pin) {
 }
 
 async function writeLog(db, entry) {
+  // الحارس الديناميكي (الطبقة ٥ — Step 7-ج): مفيش رفض كتابة أبدًا — الصف
+  // بيتكتب عادي، وقيمة غير مسجّلة بتاخد extra._unregistered + تنبيه بعد الكتابة.
+  const unregistered = !isRegisteredLogValue(entry.tool, entry.type);
+  const extra = unregistered
+    ? { ...(entry.extra || {}), _unregistered: true }
+    : entry.extra;
+
   await db.prepare(`
     INSERT INTO logs
       (timestamp, tool, type, employee, order_id, order_name,
@@ -207,8 +273,10 @@ async function writeLog(db, entry) {
     entry.valueBefore  ?? null,
     entry.valueAfter   ?? null,
     entry.notes        ?? null,
-    entry.extra ? JSON.stringify(entry.extra) : null,
+    extra ? JSON.stringify(extra) : null,
   ).run();
+
+  if (unregistered) await noteUnregisteredLogValues(db, [entry]);
 }
 
 const LOG_EXPORT_MAX = 2000;   // سقف التصدير — بيرجع للواجهة كـ `cap`
