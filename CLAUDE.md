@@ -135,13 +135,13 @@ git show 973aa70:Index.html
 | المهارة | الإصدار وقت آخر تعديل |
 |---|---|
 | ecommoda-tool-migration-playbook | v2.5.0 |
-| ecommoda-worker-builder | v3.1.0 |
+| ecommoda-worker-builder | v3.7.0 |
 | ecommoda-html-builder | v7.1.0 |
-| ecommoda-constants | v1.8.0 |
+| ecommoda-constants | v3.1.0 |
 | ecommoda-order-lifecycle | v1.3.0 |
 | shopify-graphql-helper | v1.0.0 |
 
-آخر مطابقة: 12-09-2026 · `index.js` v2.4.0 · `index.html` v3.0.0
+آخر مطابقة: 24-09-2026 · `index.js` v2.4.1 · `index.html` v3.0.0
 🔴 معلّقة: — لا شيء
 
 ## مسائل مفتوحة
